@@ -6,10 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>hello i am index page</h1>
-<a href="/login">login</a>
-<a href="/register">register</a>
-
-
+    <h1>hii i am user page</h1>
+       <% if (user.role=='admin') { %>
+          <h2>Welcome, admin </h2>  
+       <% }else{ %>
+        <h2>Welcome,user  %></h2>
+       <% } %>
 </body>
 </html>
