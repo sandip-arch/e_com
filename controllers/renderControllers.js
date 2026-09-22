@@ -17,8 +17,16 @@ const render_user=async(req,res)=>{
     const user=await User.findById(req.user.id);
     res.render("user",{user:user});
 }
+const render_forgotPassword=(req,res)=>{
+    res.render("forgot-password");
+}
+const render_verifyOtp=(req,res)=>{
+    res.render("verify-otp");
+}
+const render_changePassword=(req,res)=>{
+    res.render("change-password");
+}
 
 
 
-
-module.exports={render_index,render_login,render_register,render_user};
+module.exports={render_index,render_login,render_register,render_user,render_forgotPassword,render_verifyOtp,render_changePassword};
