@@ -9,7 +9,7 @@ router.get('/register',render_register);
 router.get('/user',authMiddleware,render_user);
 router.get('/forgotPassword',render_forgotPassword);
 router.get('/verifyOtp',render_verifyOtp);
-router.get('/changePassword',authMiddleware,render_changePassword);
+router.get('/changePassword',render_changePassword);
 //post routes
 router.post('/register',register);
 router.post('/login',login);
