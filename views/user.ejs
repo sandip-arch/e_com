@@ -7,10 +7,15 @@
 </head>
 <body>
     <h1>hii i am user page</h1>
+    <p>Hello, <%= user.role %>!</p>
        <% if (user.role=='admin') { %>
           <h2>Welcome, admin </h2>  
        <% }else{ %>
-        <h2>Welcome,user  %></h2>
+            <% if (user.role=='distributor') { %>
+                <h2>Welcome, distributor </h2>
+                <button><a href="/product/addProduct">Add Product</a></button>
+            <% } %>
        <% } %>
+
 </body>
 </html>

@@ -14,4 +14,5 @@ const authMiddleware = async(req,res,next)=>{
         res.redirect('/login');
     }
 }
-module.exports=authMiddleware
+module.exports=authMiddleware;
+
