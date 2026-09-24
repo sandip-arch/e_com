@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout - STORE</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+
+        :root {
+            --brand-primary: #ff5722;
+            --brand-primary-hover: #e64a19;
+            --brand-dark: #212121;
+            --bg-light: #f7f7f7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg-light);
+            color: var(--brand-dark);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Navbar */
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--brand-primary) !important;
+        }
+
+        .navbar-brand i {
+            margin-right: 6px;
+        }
+
+        /* Main */
+
+        .checkout-wrapper {
+            padding: 50px 0;
+        }
+
+        .checkout-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .checkout-subtitle {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        /* Cards */
+
+        .checkout-card {
+            background: #ffffff;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+            padding: 22px 25px;
+        }
+
+        .card-header-custom h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .card-body-custom {
+            padding: 25px;
+        }
+
+        /* User Information */
+
+        .user-info-box {
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .user-info-label {
+            display: block;
+            font-size: 0.82rem;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .user-info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #222;
+            word-break: break-word;
+        }
+
+        .address-box {
+            background: #fff8f5;
+            border: 1px solid #ffe0d6;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .address-box .user-info-value {
+            line-height: 1.6;
+        }
+
+        /* Product */
+
+        .product-box {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .product-category {
+            font-size: 0.82rem;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Quantity */
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            width: fit-content;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #ffffff;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .quantity-btn:hover {
+            background: #f2f2f2;
+        }
+
+        .quantity-value {
+            width: 40px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Summary */
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .summary-row.total {
+            border-top: 1px solid #eeeeee;
+            padding-top: 18px;
+            margin-top: 18px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .summary-row.total span:last-child {
+            color: var(--brand-primary);
+        }
+
+        /* Payment button */
+
+        .payment-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            background: var(--brand-primary);
+            color: #ffffff;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .payment-btn:hover {
+            background: var(--brand-primary-hover);
+        }
+
+        /* Security */
+
+        .security-box {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #f6fff8;
+            border: 1px solid #d9f0df;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 18px;
+        }
+
+        .security-box i {
+            color: #198754;
+            font-size: 1.3rem;
+        }
+
+        .security-box strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .security-box small {
+            color: #666;
+        }
+
+        /* Back button */
+
+        .back-btn {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            color: var(--brand-primary);
+        }
+
+        /* Responsive */
+
+        @media (max-width: 768px) {
+
+            .checkout-wrapper {
+                padding: 30px 15px;
+            }
+
+            .checkout-title {
+                font-size: 1.6rem;
+            }
+
+            .product-image {
+                width: 80px;
+                height: 80px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-expand-lg">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-shop"></i>
+                STORE
+            </a>
+
+            <a href="/" class="back-btn">
+                <i class="bi bi-arrow-left"></i>
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Checkout -->
+
+    <main class="checkout-wrapper">
+
+        <div class="container">
+
+            <!-- Heading -->
+
+            <div class="mb-4">
+
+                <h1 class="checkout-title">
+                    Checkout
+                </h1>
+
+                <p class="checkout-subtitle">
+                    Review your information and order before proceeding to payment.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+                <!-- LEFT SIDE -->
+
+                <div class="col-lg-7">
+
+
+                    <!-- Customer Information -->
+
+                    <div class="checkout-card mb-4">
+
+                        <div class="card-header-custom">
+
+                            <h4>
+                                <i class="bi bi-person-circle me-2"></i>
+                                Delivery Information
+                            </h4>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="row g-3">
+
+                                <!-- Name -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            Full Name
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.name || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Email -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            Email
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.email || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Phone -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            Phone Number
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.phone || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PIN -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            PIN Code
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.pin || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Address -->
+
+                                <div class="col-12">
+
+                                    <div class="address-box">
+
+                                        <span class="user-info-label">
+                                            <i class="bi bi-geo-alt me-1"></i>
+                                            Delivery Address
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.address || 'Address not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- City -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            City
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.city || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- State -->
+
+                                <div class="col-md-6">
+
+                                    <div class="user-info-box mb-0">
+
+                                        <span class="user-info-label">
+                                            State
+                                        </span>
+
+                                        <div class="user-info-value">
+                                            <%= user.state || 'Not available' %>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Information message -->
+
+                            <div class="alert alert-light border mt-4 mb-0">
+
+                                <i class="bi bi-info-circle me-2"></i>
+
+                                Your delivery information is taken from your
+                                account. To change it, update your profile
+                                before placing the order.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Product -->
+
+                    <div class="checkout-card">
+
+                        <div class="card-header-custom">
+
+                            <h4>
+                                <i class="bi bi-bag-check me-2"></i>
+                                Your Product
+                            </h4>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="product-box">
+
+                                <img
+                                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
+                                    alt="Wireless Noise Canceling Headphones"
+                                    class="product-image"
+                                >
+
+
+                                <div class="flex-grow-1">
+
+                                    <div class="product-category">
+                                        Electronics
+                                    </div>
+
+                                    <div class="product-name">
+                                        Wireless Noise Canceling Headphones
+                                    </div>
+
+                                    <div class="product-price">
+                                        $149.99
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Quantity -->
+
+                                <div>
+
+                                    <div class="small text-muted mb-2">
+                                        Quantity
+                                    </div>
+
+                                    <div class="quantity-control">
+
+                                        <button
+                                            type="button"
+                                            class="quantity-btn"
+                                            onclick="decreaseQuantity()"
+                                        >
+                                            −
+                                        </button>
+
+                                        <div
+                                            class="quantity-value"
+                                            id="quantity"
+                                        >
+                                            1
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="quantity-btn"
+                                            onclick="increaseQuantity()"
+                                        >
+                                            +
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT SIDE -->
+
+                <div class="col-lg-5">
+
+
+                    <!-- Order Summary -->
+
+                    <div class="checkout-card">
+
+                        <div class="card-header-custom">
+
+                            <h4>
+                                <i class="bi bi-receipt me-2"></i>
+                                Order Summary
+                            </h4>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <!-- Product -->
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Product
+                                </span>
+
+                                <span>
+                                    $149.99
+                                </span>
+
+                            </div>
+
+
+                            <!-- Quantity -->
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Quantity
+                                </span>
+
+                                <span id="summaryQuantity">
+                                    1
+                                </span>
+
+                            </div>
+
+
+                            <!-- Delivery -->
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Delivery
+                                </span>
+
+                                <span class="text-success">
+                                    FREE
+                                </span>
+
+                            </div>
+
+
+                            <!-- Total -->
+
+                            <div class="summary-row total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <span id="totalPrice">
+                                    $149.99
+                                </span>
+
+                            </div>
+
+
+                            <!-- Payment -->
+
+                            <button
+                                type="button"
+                                class="payment-btn mt-3"
+                                onclick="proceedToPayment()"
+                            >
+
+                                <i class="bi bi-credit-card me-2"></i>
+
+                                Proceed to Payment
+
+                            </button>
+
+
+                            <!-- Security -->
+
+                            <div class="security-box">
+
+                                <i class="bi bi-shield-check"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Secure Checkout
+                                    </strong>
+
+                                    <small>
+                                        Your payment information will be
+                                        processed securely through our
+                                        payment gateway.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- Bootstrap JS -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <script>
+
+        const productPrice = 149.99;
+
+        let quantity = 1;
+
+
+        function updateCheckout() {
+
+            document.getElementById('quantity').textContent = quantity;
+
+            document.getElementById('summaryQuantity').textContent = quantity;
+
+            const total = productPrice * quantity;
+
+            document.getElementById('totalPrice').textContent =
+                '$' + total.toFixed(2);
+
+        }
+
+
+        function increaseQuantity() {
+
+            if (quantity < 10) {
+
+                quantity++;
+
+                updateCheckout();
+
+            }
+
+        }
+
+
+        function decreaseQuantity() {
+
+            if (quantity > 1) {
+
+                quantity--;
+
+                updateCheckout();
+
+            }
+
+        }
+
+
+        function proceedToPayment() {
+
+            const userName =
+                "<%= user.name || '' %>";
+
+            const userEmail =
+                "<%= user.email || '' %>";
+
+
+            if (!userName || !userEmail) {
+
+                alert(
+                    "Your account information is incomplete. Please update your profile before continuing."
+                );
+
+                return;
+
+            }
+
+
+            const total =
+                (productPrice * quantity).toFixed(2);
+
+
+            /*
+             * Temporary step.
+             *
+             * Later this button will send the order
+             * to our payment gateway.
+             */
+
+            alert(
+                "Checkout ready!\n\n" +
+                "Customer: " + userName + "\n" +
+                "Email: " + userEmail + "\n" +
+                "Quantity: " + quantity + "\n" +
+                "Total: $" + total
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

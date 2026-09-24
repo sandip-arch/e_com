@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,7 @@
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
@@ -24,7 +25,7 @@
             color: #334155;
         }
 
-       
+
         .navbar-brand {
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -57,7 +58,7 @@
             color: #ffffff;
         }
 
-     
+
         .hero-carousel-item {
             height: 480px;
             background-size: cover;
@@ -73,7 +74,7 @@
             align-items: center;
         }
 
-        
+
         .product-card {
             border: 1px solid #e2e8f0;
             border-radius: 12px;
@@ -137,6 +138,7 @@
         }
     </style>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
 
     <!-- nav Bar -->
@@ -161,7 +163,7 @@
                 <div class="d-flex align-items-center gap-2">
                     <a href="/login" class="btn btn-outline-secondary px-3 py-2 text-decoration-none">login</a>
                     <a href="/register" class="btn btn-brand-primary px-3 py-2 text-decoration-none">register</a>
-                    
+
                     <a href="#cart" class="btn btn-light position-relative ms-2">
                         <i class="bi bi-cart3 fs-5"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -173,14 +175,14 @@
         </div>
     </nav>
 
- 
+
     <div class="bg-light py-2 border-bottom">
         <div class="container">
             <h1 class="h6 mb-0 text-muted fw-normal text-capitalize">hello i am index page</h1>
         </div>
     </div>
 
-  
+
     <section class="carousel-section">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -191,13 +193,16 @@
 
             <div class="carousel-inner">
                 <!-- slide 1 -->
-                <div class="carousel-item active hero-carousel-item" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1500&q=80');">
+                <div class="carousel-item active hero-carousel-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1500&q=80');">
                     <div class="carousel-overlay">
                         <div class="container">
                             <div class="col-lg-6 text-white">
-                                <span class="badge bg-warning text-dark mb-2 px-3 py-2 fw-semibold">Limited Time Offer</span>
+                                <span class="badge bg-warning text-dark mb-2 px-3 py-2 fw-semibold">Limited Time
+                                    Offer</span>
                                 <h2 class="display-5 fw-bold mb-3">Upgrade Your Everyday Essentials</h2>
-                                <p class="lead mb-4 text-light opacity-90">Discover our curated collection of premium accessories and tech devices at special seasonal prices.</p>
+                                <p class="lead mb-4 text-light opacity-90">Discover our curated collection of premium
+                                    accessories and tech devices at special seasonal prices.</p>
                                 <a href="#products" class="btn btn-brand-primary btn-lg px-4 me-2">Shop Now</a>
                             </div>
                         </div>
@@ -205,13 +210,15 @@
                 </div>
 
                 <!-- slide 2 -->
-                <div class="carousel-item hero-carousel-item" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1500&q=80');">
+                <div class="carousel-item hero-carousel-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1500&q=80');">
                     <div class="carousel-overlay">
                         <div class="container">
                             <div class="col-lg-6 text-white">
                                 <span class="badge bg-danger mb-2 px-3 py-2 fw-semibold">Best Sound</span>
                                 <h2 class="display-5 fw-bold mb-3">Immersive Audio Experience</h2>
-                                <p class="lead mb-4 text-light opacity-90">Crystal-clear sound with advanced noise cancelation. Designed for creators and audiophiles.</p>
+                                <p class="lead mb-4 text-light opacity-90">Crystal-clear sound with advanced noise
+                                    cancelation. Designed for creators and audiophiles.</p>
                                 <a href="#products" class="btn btn-brand-primary btn-lg px-4 me-2">Explore Audio</a>
                             </div>
                         </div>
@@ -219,13 +226,15 @@
                 </div>
 
                 <!-- slide 3 -->
-                <div class="carousel-item hero-carousel-item" style="background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1500&q=80');">
+                <div class="carousel-item hero-carousel-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1500&q=80');">
                     <div class="carousel-overlay">
                         <div class="container">
                             <div class="col-lg-6 text-white">
                                 <span class="badge bg-info text-dark mb-2 px-3 py-2 fw-semibold">New Arrival</span>
                                 <h2 class="display-5 fw-bold mb-3">Smart Wearables Collection</h2>
-                                <p class="lead mb-4 text-light opacity-90">Track your health, manage notifications, and stay connected with cutting-edge smart design.</p>
+                                <p class="lead mb-4 text-light opacity-90">Track your health, manage notifications, and
+                                    stay connected with cutting-edge smart design.</p>
                                 <a href="#products" class="btn btn-brand-primary btn-lg px-4 me-2">View Catalog</a>
                             </div>
                         </div>
@@ -253,13 +262,14 @@
         </div>
 
         <div class="row g-4">
-            
+
             <!-- product card 1 -->
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="product-card h-100 d-flex flex-column">
                     <div class="product-img-wrapper">
                         <span class="badge-discount">-20%</span>
-                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Wireless Headphones">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"
+                            alt="Wireless Headphones">
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <div class="text-muted small mb-1">Electronics</div>
@@ -277,10 +287,13 @@
                             <span class="text-decoration-line-through text-muted small ms-2">$189.99</span>
                         </div>
                         <div class="mt-auto d-grid gap-2">
-                            <button type="button" class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
+                            <button type="button"
+                                class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-cart-plus"></i> Add to Cart
                             </button>
-                            <button type="button" class="btn btn-brand-primary">Buy Now</button>
+                            <a href="/checkout" class="btn btn-brand-primary text-decoration-none text-center">
+                                Buy Now
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -290,7 +303,8 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="product-card h-100 d-flex flex-column">
                     <div class="product-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" alt="Smartwatch">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
+                            alt="Smartwatch">
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <div class="text-muted small mb-1">Wearables</div>
@@ -307,10 +321,13 @@
                             <span class="fs-5 fw-bold text-dark">$89.00</span>
                         </div>
                         <div class="mt-auto d-grid gap-2">
-                            <button type="button" class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
+                            <button type="button"
+                                class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-cart-plus"></i> Add to Cart
                             </button>
-                            <button type="button" class="btn btn-brand-primary">Buy Now</button>
+                            <a href="/checkout" class="btn btn-brand-primary text-decoration-none text-center">
+                                Buy Now
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -321,7 +338,8 @@
                 <div class="product-card h-100 d-flex flex-column">
                     <div class="product-img-wrapper">
                         <span class="badge-discount">-15%</span>
-                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" alt="Sunglasses">
+                        <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80"
+                            alt="Sunglasses">
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <div class="text-muted small mb-1">Accessories</div>
@@ -339,10 +357,13 @@
                             <span class="text-decoration-line-through text-muted small ms-2">$55.00</span>
                         </div>
                         <div class="mt-auto d-grid gap-2">
-                            <button type="button" class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
+                            <button type="button"
+                                class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-cart-plus"></i> Add to Cart
                             </button>
-                            <button type="button" class="btn btn-brand-primary">Buy Now</button>
+                            <a href="/checkout" class="btn btn-brand-primary text-decoration-none text-center">
+                                Buy Now
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -352,7 +373,8 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="product-card h-100 d-flex flex-column">
                     <div class="product-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80" alt="Smart Band">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80"
+                            alt="Smart Band">
                     </div>
                     <div class="p-3 d-flex flex-column flex-grow-1">
                         <div class="text-muted small mb-1">Wearables</div>
@@ -369,7 +391,8 @@
                             <span class="fs-5 fw-bold text-dark">$69.50</span>
                         </div>
                         <div class="mt-auto d-grid gap-2">
-                            <button type="button" class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
+                            <button type="button"
+                                class="btn btn-brand-outline d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-cart-plus"></i> Add to Cart
                             </button>
                             <button type="button" class="btn btn-brand-primary">Buy Now</button>
@@ -389,7 +412,8 @@
                     <span class="fw-bold fs-5 text-white d-flex align-items-center gap-2 mb-3">
                         <i class="bi bi-bag-check-fill text-warning"></i> STORE
                     </span>
-                    <p class="small">Your primary destination for high-grade everyday essentials, electronics, and accessories with verified secure checkout.</p>
+                    <p class="small">Your primary destination for high-grade everyday essentials, electronics, and
+                        accessories with verified secure checkout.</p>
                     <div class="d-flex gap-3 text-white fs-5">
                         <a href="#"><i class="bi bi-twitter-x"></i></a>
                         <a href="#"><i class="bi bi-facebook"></i></a>
@@ -419,7 +443,8 @@
 
                 <div class="col-12 col-md-4">
                     <h4 class="h6 fw-bold text-white mb-3">Security & Trust</h4>
-                    <p class="small mb-3"><i class="bi bi-shield-check text-success me-2"></i>256-bit encrypted checkout and fraud prevention protection.</p>
+                    <p class="small mb-3"><i class="bi bi-shield-check text-success me-2"></i>256-bit encrypted checkout
+                        and fraud prevention protection.</p>
                     <div class="input-group">
                         <input type="email" class="form-control" placeholder="Enter your email for deals">
                         <button class="btn btn-brand-primary" type="button">Subscribe</button>
@@ -436,4 +461,5 @@
     <!-- Bootstrap 5 Bundle JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
