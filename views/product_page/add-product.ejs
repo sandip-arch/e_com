@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<body>
+
+    <h1>Add New Product</h1>
+
+    <!-- 
+      enctype="multipart/form-data" is required because your schema contains an 'image' field.
+      Replace '/products' with your actual backend route URL.
+    -->
+    <form action="/product/addProduct" method="POST" enctype="multipart/form-data">
+        
+        <!-- Name Field -->
+        <div>
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <!-- Price Field -->
+        <div>
+            <label for="price">Price ($):</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required>
+        </div>
+
+        <!-- Type Field (Matches your schema's enum) -->
+        <div>
+            <label for="type">Category / Type:</label>
+            <select id="type" name="type" required>
+                <option value="" disabled selected>Select a type...</option>
+                <option value="clothes">Clothes</option>
+                <option value="cosmetics">Cosmetics</option>
+                <option value="electronics">Electronics</option>
+                <option value="food">Food</option>
+            </select>
+        </div>
+
+        <!-- Quantity Field -->
+        <div>
+            <label for="quantity">Quantity in Stock:</label>
+            <input type="number" id="quantity" name="quantity" min="0" required>
+        </div>
+
+        <!-- Image Upload Field -->
+        <div>
+            <label for="image">Product Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+
+        <!-- Description Field -->
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        </div>
+
+        <!-- 
+          DistributerId note: This is typically handled automatically on the backend 
+          using the logged-in session data (e.g., req.user._id), so it is omitted from the visible form.
+        -->
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit">Add Product</button>
+        </div>
+
+    </form>
+
+</body>
+</html>
