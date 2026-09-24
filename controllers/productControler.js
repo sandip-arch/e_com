@@ -4,8 +4,10 @@ const User=require('../models/userSchema');
 
 
 const addProducts = async (req, res) => {
+      
     const user=await User.findById(req.user.id);
-    if (user.role !== 'distributer') {
+    console.log(user);
+    if (user.role !== 'distributor') {
         return res.render('error', { message: 'You are not distributor to add products.' });
     }
      try {
