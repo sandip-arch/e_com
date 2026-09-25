@@ -1,5 +1,4 @@
 const User=require('../models/userSchema');
-const { getCheckoutUser } = require('../temp/checkout'); //just from temporary
 const mongoose=require('mongoose');
 const Product = require('../models/productModel');
 const render_index=(req,res)=>{
@@ -20,7 +19,7 @@ const render_user=async(req,res)=>{
     const products = await Product.find({});
     res.render("user",{user:user,products:products});
     //
-    res.render("user",{user:user});
+    // res.render("user",{user:user});// this line is motherfucker 
 }
 const render_forgotPassword=(req,res)=>{
     res.render("forgot-password");
@@ -31,25 +30,5 @@ const render_verifyOtp=(req,res)=>{
 const render_changePassword=(req,res)=>{
     res.render("change-password");
 }
-const render_checkout = async (req, res) => {
-
-    try {
-
-        const user = await getCheckoutUser(req.user.id);
-
-        res.render('checkout', {
-            user
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).send('Unable to load checkout information');
-
-    }
-
-};
-
 
 module.exports={render_index,render_login,render_register,render_user,render_forgotPassword,render_verifyOtp,render_changePassword};
