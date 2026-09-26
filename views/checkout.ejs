@@ -5,30 +5,20 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Checkout | STORE</title>
 
 
     <!-- Bootstrap -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Bootstrap Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 
     <style>
-
         :root {
             --brand-primary: #ff5722;
             --brand-primary-hover: #e64a19;
@@ -175,28 +165,89 @@
 
             color: #94a3b8;
         }
-
     </style>
 
 </head>
 
 
 <body class="d-flex flex-column min-vh-100">
+    <script>
+<!-- const checkoutData = document.getElementById('checkoutData'); -->
+const proceedButton = document.getElementById('proceedToPayment');
+
+const productId = checkoutData.dataset.productId;
+
+proceedButton.addEventListener('click', async () => {
+
+    try {
+
+        // Get the quantity from your quantity input
+        const quantityInput = document.getElementById('quantity');
+        const quantity = Number(quantityInput.value);
+
+        if (!quantity || quantity < 1) {
+            alert('Please select a valid quantity.');
+            return;
+        }
+
+        proceedButton.disabled = true;
+        proceedButton.textContent = 'Creating Payment...';
+
+        const response = await fetch('/payment/create', {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || 'Unable to create payment'
+            );
+        }
+
+        console.log('Payment session:', data.payment);
+
+        // Temporary:
+        // show the generated payment session
+        alert(
+            `Payment session created!\n\n` +
+            `Transaction: ${data.payment.transactionId}\n` +
+            `Amount: ₹${data.payment.amount}\n` +
+            `Status: ${data.payment.status}`
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    } finally {
+
+        proceedButton.disabled = false;
+        proceedButton.textContent = 'Proceed to Payment';
+    }
+});
+</script>
 
 
     <!-- NAVBAR -->
 
-    <nav
-        class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3"
-    >
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3">
 
         <div class="container">
 
 
-            <a
-                class="navbar-brand text-dark d-flex align-items-center gap-2"
-                href="/user"
-            >
+            <a class="navbar-brand text-dark d-flex align-items-center gap-2" href="/user">
 
                 <i class="bi bi-bag-check-fill text-warning fs-4"></i>
 
@@ -205,10 +256,7 @@
             </a>
 
 
-            <a
-                href="/user"
-                class="btn btn-light"
-            >
+            <a href="/user" class="btn btn-light">
 
                 <i class="bi bi-arrow-left"></i>
 
@@ -249,15 +297,12 @@
         EJS directly inside JavaScript.
     -->
 
-    <div
-        id="checkoutData"
-
-        data-product-price="<%= Number(product.price) %>"
-
-        data-delivery-charge="<%= Number(deliveryCharge) %>"
-
-        data-max-quantity="<%= Number(product.quantity) %>"
-    >
+    <div 
+    id="checkoutData" 
+    data-product-id="<%= product._id %>" 
+    data-product-price="<%= Number(product.price) %>"
+    data-delivery-charge="<%= Number(deliveryCharge) %>" 
+    data-max-quantity="<%= Number(product.quantity) %>">
     </div>
 
 
@@ -292,11 +337,8 @@
 
                         <!-- PRODUCT IMAGE -->
 
-                        <img
-                            src="<%= product.image || 'https://via.placeholder.com/300x200?text=No+Image' %>"
-                            alt="<%= product.name %>"
-                            class="product-image me-3"
-                        >
+                        <img src="<%= product.image || 'https://via.placeholder.com/300x200?text=No+Image' %>"
+                            alt="<%= product.name %>" class="product-image me-3">
 
 
                         <div class="flex-grow-1">
@@ -355,49 +397,29 @@
 
                         <div class="col-md-6">
 
-                            <label
-                                class="form-label fw-semibold"
-                                for="quantity"
-                            >
+                            <label class="form-label fw-semibold" for="quantity">
                                 Quantity
                             </label>
 
 
-                            <div
-                                class="input-group"
-                                style="max-width: 180px;"
-                            >
+                            <div class="input-group" style="max-width: 180px;">
 
 
                                 <!-- DECREASE -->
 
-                                <button
-                                    class="btn btn-outline-secondary"
-                                    type="button"
-                                    id="decreaseQuantity"
-                                >
+                                <button class="btn btn-outline-secondary" type="button" id="decreaseQuantity">
                                     −
                                 </button>
 
 
                                 <!-- QUANTITY -->
 
-                                <input
-                                    type="text"
-                                    class="form-control text-center"
-                                    value="1"
-                                    id="quantity"
-                                    readonly
-                                >
+                                <input type="text" class="form-control text-center" value="1" id="quantity" readonly>
 
 
                                 <!-- INCREASE -->
 
-                                <button
-                                    class="btn btn-outline-secondary"
-                                    type="button"
-                                    id="increaseQuantity"
-                                >
+                                <button class="btn btn-outline-secondary" type="button" id="increaseQuantity">
                                     +
                                 </button>
 
@@ -443,21 +465,13 @@
 
                             <div class="col-md-6">
 
-                                <label
-                                    for="fullName"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="fullName" class="form-label fw-semibold">
                                     Full Name
                                 </label>
 
 
-                                <input
-                                    type="text"
-                                    id="fullName"
-                                    class="form-control"
-                                    value="<%= user.name || '' %>"
-                                    required
-                                >
+                                <input type="text" id="fullName" class="form-control" value="<%= user.name || '' %>"
+                                    required>
 
                             </div>
 
@@ -467,21 +481,13 @@
 
                             <div class="col-md-6">
 
-                                <label
-                                    for="email"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="email" class="form-label fw-semibold">
                                     Email Address
                                 </label>
 
 
-                                <input
-                                    type="email"
-                                    id="email"
-                                    class="form-control"
-                                    value="<%= user.email || '' %>"
-                                    required
-                                >
+                                <input type="email" id="email" class="form-control" value="<%= user.email || '' %>"
+                                    required>
 
                             </div>
 
@@ -491,21 +497,13 @@
 
                             <div class="col-md-6">
 
-                                <label
-                                    for="phone"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="phone" class="form-label fw-semibold">
                                     Phone Number
                                 </label>
 
 
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    class="form-control"
-                                    value="<%= user.phone || '' %>"
-                                    required
-                                >
+                                <input type="tel" id="phone" class="form-control" value="<%= user.phone || '' %>"
+                                    required>
 
                             </div>
 
@@ -515,21 +513,13 @@
 
                             <div class="col-md-6">
 
-                                <label
-                                    for="pincode"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="pincode" class="form-label fw-semibold">
                                     Pincode
                                 </label>
 
 
-                                <input
-                                    type="text"
-                                    id="pincode"
-                                    class="form-control"
-                                    value="<%= user.pincode || '' %>"
-                                    required
-                                >
+                                <input type="text" id="pincode" class="form-control" value="<%= user.pincode || '' %>"
+                                    required>
 
                             </div>
 
@@ -539,20 +529,13 @@
 
                             <div class="col-12">
 
-                                <label
-                                    for="address"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="address" class="form-label fw-semibold">
                                     Delivery Address
                                 </label>
 
 
-                                <textarea
-                                    id="address"
-                                    class="form-control"
-                                    rows="3"
-                                    required
-                                ><%= user.address || '' %></textarea>
+                                <textarea id="address" class="form-control" rows="3"
+                                    required><%= user.address || '' %></textarea>
 
                             </div>
 
@@ -562,21 +545,13 @@
 
                             <div class="col-12">
 
-                                <label
-                                    for="landmark"
-                                    class="form-label fw-semibold"
-                                >
+                                <label for="landmark" class="form-label fw-semibold">
                                     Nearest Landmark
                                 </label>
 
 
-                                <input
-                                    type="text"
-                                    id="landmark"
-                                    class="form-control"
-                                    value="<%= user.nearest_landmark || '' %>"
-                                    placeholder="Enter nearest landmark"
-                                >
+                                <input type="text" id="landmark" class="form-control"
+                                    value="<%= user.nearest_landmark || '' %>" placeholder="Enter nearest landmark">
 
                             </div>
 
@@ -596,10 +571,7 @@
             <div class="col-lg-4">
 
 
-                <div
-                    class="checkout-card p-4 sticky-lg-top"
-                    style="top: 100px;"
-                >
+                <div class="checkout-card p-4 sticky-lg-top" style="top: 100px;">
 
 
                     <h2 class="section-title h5 mb-4">
@@ -621,10 +593,7 @@
                         </span>
 
 
-                        <span
-                            class="fw-semibold"
-                            id="productPrice"
-                        >
+                        <span class="fw-semibold" id="productPrice">
                             ₹<%= Number(product.price).toFixed(2) %>
                         </span>
 
@@ -641,10 +610,7 @@
                         </span>
 
 
-                        <span
-                            class="fw-semibold"
-                            id="summaryQuantity"
-                        >
+                        <span class="fw-semibold" id="summaryQuantity">
                             1
                         </span>
 
@@ -661,10 +627,7 @@
                         </span>
 
 
-                        <span
-                            class="fw-semibold"
-                            id="deliveryPrice"
-                        >
+                        <span class="fw-semibold" id="deliveryPrice">
                             ₹<%= Number(deliveryCharge).toFixed(2) %>
                         </span>
 
@@ -683,10 +646,7 @@
 
                         <span id="totalPrice">
 
-                            ₹<%= (
-                                Number(product.price) +
-                                Number(deliveryCharge)
-                            ).toFixed(2) %>
+                            ₹<%= ( Number(product.price) + Number(deliveryCharge) ).toFixed(2) %>
 
                         </span>
 
@@ -709,15 +669,11 @@
 
                     <!-- PAYMENT BUTTON -->
 
-                    <button
-                        type="button"
-                        class="btn btn-brand-primary w-100 mt-4"
-                        id="paymentButton"
-                    >
-
+                    <button type="button" id="proceedToPayment" class="btn btn-brand-primary w-100 mt-4">
                         Proceed to Payment
 
-                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    <i class="bi bi-arrow-right ms-2"></i>
 
                     </button>
 
