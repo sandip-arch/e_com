@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checkout | STORE</title>
+
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+
+    <style>
+
+        :root {
+            --brand-primary: #ff5722;
+            --brand-primary-hover: #e64a19;
+            --brand-dark: #1e293b;
+            --bg-light: #f8fafc;
+        }
+
+
+        body {
+            background-color: var(--bg-light);
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                "Helvetica Neue",
+                Arial,
+                sans-serif;
+
+            color: #334155;
+        }
+
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+
+        .checkout-card {
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 8px 25px rgba(15, 23, 42, 0.05);
+        }
+
+
+        .section-title {
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+
+        .product-image {
+            width: 110px;
+            height: 110px;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            background: #f1f5f9;
+        }
+
+
+        .form-control {
+            border-radius: 8px;
+
+            padding: 11px 13px;
+
+            border-color: #cbd5e1;
+        }
+
+
+        .form-control:focus {
+            border-color: var(--brand-primary);
+
+            box-shadow:
+                0 0 0 0.2rem rgba(255, 87, 34, 0.12);
+        }
+
+
+        .btn-brand-primary {
+            background-color: var(--brand-primary);
+
+            border-color: var(--brand-primary);
+
+            color: #ffffff;
+
+            font-weight: 600;
+
+            padding: 12px 20px;
+        }
+
+
+        .btn-brand-primary:hover {
+            background-color: var(--brand-primary-hover);
+
+            border-color: var(--brand-primary-hover);
+
+            color: #ffffff;
+        }
+
+
+        .price-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 12px;
+        }
+
+
+        .total-row {
+            border-top: 1px solid #e2e8f0;
+
+            padding-top: 16px;
+
+            margin-top: 16px;
+
+            font-size: 1.15rem;
+
+            font-weight: 700;
+        }
+
+
+        .secure-box {
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+
+            color: #166534;
+
+            border-radius: 10px;
+
+            padding: 12px;
+
+            font-size: 0.9rem;
+        }
+
+
+        .stock-text {
+            font-size: 0.9rem;
+        }
+
+
+        footer {
+            background-color: #0f172a;
+
+            color: #94a3b8;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+
+    <!-- NAVBAR -->
+
+    <nav
+        class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3"
+    >
+
+        <div class="container">
+
+
+            <a
+                class="navbar-brand text-dark d-flex align-items-center gap-2"
+                href="/user"
+            >
+
+                <i class="bi bi-bag-check-fill text-warning fs-4"></i>
+
+                STORE
+
+            </a>
+
+
+            <a
+                href="/user"
+                class="btn btn-light"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="bg-light py-4 border-bottom">
+
+        <div class="container">
+
+            <h1 class="h3 fw-bold text-dark mb-1">
+                Checkout
+            </h1>
+
+            <p class="text-muted mb-0">
+                Review your order and enter your delivery details.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!--
+        CHECKOUT DATA
+
+        We use data-* attributes instead of putting
+        EJS directly inside JavaScript.
+    -->
+
+    <div
+        id="checkoutData"
+
+        data-product-price="<%= Number(product.price) %>"
+
+        data-delivery-charge="<%= Number(deliveryCharge) %>"
+
+        data-max-quantity="<%= Number(product.quantity) %>"
+    >
+    </div>
+
+
+
+    <!-- CHECKOUT -->
+
+    <main class="container my-5">
+
+        <div class="row g-4">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="col-lg-8">
+
+
+                <!-- PRODUCT -->
+
+                <div class="checkout-card p-4 mb-4">
+
+                    <h2 class="section-title h5 mb-4">
+
+                        <i class="bi bi-bag me-2"></i>
+
+                        Your Product
+
+                    </h2>
+
+
+                    <div class="d-flex align-items-center">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <img
+                            src="<%= product.image || 'https://via.placeholder.com/300x200?text=No+Image' %>"
+                            alt="<%= product.name %>"
+                            class="product-image me-3"
+                        >
+
+
+                        <div class="flex-grow-1">
+
+
+                            <!-- PRODUCT TYPE -->
+
+                            <div class="text-muted small text-uppercase">
+
+                                <%= product.type || 'Product' %>
+
+                            </div>
+
+
+                            <!-- PRODUCT NAME -->
+
+                            <h3 class="h6 fw-bold text-dark mb-2">
+
+                                <%= product.name %>
+
+                            </h3>
+
+
+                            <!-- PRODUCT PRICE -->
+
+                            <span class="fs-5 fw-bold text-dark">
+
+                                ₹<%= Number(product.price).toFixed(2) %>
+
+                            </span>
+
+
+                            <!-- STOCK -->
+
+                            <div class="text-muted stock-text mt-1">
+
+                                Available stock:
+
+                                <strong>
+                                    <%= product.quantity %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr class="my-4">
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="row align-items-center">
+
+                        <div class="col-md-6">
+
+                            <label
+                                class="form-label fw-semibold"
+                                for="quantity"
+                            >
+                                Quantity
+                            </label>
+
+
+                            <div
+                                class="input-group"
+                                style="max-width: 180px;"
+                            >
+
+
+                                <!-- DECREASE -->
+
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    id="decreaseQuantity"
+                                >
+                                    −
+                                </button>
+
+
+                                <!-- QUANTITY -->
+
+                                <input
+                                    type="text"
+                                    class="form-control text-center"
+                                    value="1"
+                                    id="quantity"
+                                    readonly
+                                >
+
+
+                                <!-- INCREASE -->
+
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    id="increaseQuantity"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+
+                            <small class="text-muted">
+
+                                Maximum:
+
+                                <%= product.quantity %>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DELIVERY INFORMATION -->
+
+                <div class="checkout-card p-4">
+
+                    <h2 class="section-title h5 mb-4">
+
+                        <i class="bi bi-truck me-2"></i>
+
+                        Delivery Information
+
+                    </h2>
+
+
+                    <form id="checkoutForm">
+
+
+                        <div class="row g-3">
+
+
+                            <!-- NAME -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="fullName"
+                                    class="form-label fw-semibold"
+                                >
+                                    Full Name
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    class="form-control"
+                                    value="<%= user.name || '' %>"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- EMAIL -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="email"
+                                    class="form-label fw-semibold"
+                                >
+                                    Email Address
+                                </label>
+
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    class="form-control"
+                                    value="<%= user.email || '' %>"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- PHONE -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="phone"
+                                    class="form-label fw-semibold"
+                                >
+                                    Phone Number
+                                </label>
+
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    class="form-control"
+                                    value="<%= user.phone || '' %>"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- PINCODE -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="pincode"
+                                    class="form-label fw-semibold"
+                                >
+                                    Pincode
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="pincode"
+                                    class="form-control"
+                                    value="<%= user.pincode || '' %>"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="col-12">
+
+                                <label
+                                    for="address"
+                                    class="form-label fw-semibold"
+                                >
+                                    Delivery Address
+                                </label>
+
+
+                                <textarea
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    required
+                                ><%= user.address || '' %></textarea>
+
+                            </div>
+
+
+
+                            <!-- LANDMARK -->
+
+                            <div class="col-12">
+
+                                <label
+                                    for="landmark"
+                                    class="form-label fw-semibold"
+                                >
+                                    Nearest Landmark
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="landmark"
+                                    class="form-control"
+                                    value="<%= user.nearest_landmark || '' %>"
+                                    placeholder="Enter nearest landmark"
+                                >
+
+                            </div>
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="col-lg-4">
+
+
+                <div
+                    class="checkout-card p-4 sticky-lg-top"
+                    style="top: 100px;"
+                >
+
+
+                    <h2 class="section-title h5 mb-4">
+
+                        <i class="bi bi-receipt me-2"></i>
+
+                        Order Summary
+
+                    </h2>
+
+
+
+                    <!-- PRODUCT PRICE -->
+
+                    <div class="price-row">
+
+                        <span class="text-muted">
+                            Product Price
+                        </span>
+
+
+                        <span
+                            class="fw-semibold"
+                            id="productPrice"
+                        >
+                            ₹<%= Number(product.price).toFixed(2) %>
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="price-row">
+
+                        <span class="text-muted">
+                            Quantity
+                        </span>
+
+
+                        <span
+                            class="fw-semibold"
+                            id="summaryQuantity"
+                        >
+                            1
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="price-row">
+
+                        <span class="text-muted">
+                            Delivery
+                        </span>
+
+
+                        <span
+                            class="fw-semibold"
+                            id="deliveryPrice"
+                        >
+                            ₹<%= Number(deliveryCharge).toFixed(2) %>
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="price-row total-row">
+
+                        <span>
+                            Total
+                        </span>
+
+
+                        <span id="totalPrice">
+
+                            ₹<%= (
+                                Number(product.price) +
+                                Number(deliveryCharge)
+                            ).toFixed(2) %>
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- SECURITY -->
+
+                    <div class="secure-box mt-4">
+
+                        <i class="bi bi-shield-check me-2"></i>
+
+                        Secure checkout.
+                        Your payment information will be protected.
+
+                    </div>
+
+
+
+                    <!-- PAYMENT BUTTON -->
+
+                    <button
+                        type="button"
+                        class="btn btn-brand-primary w-100 mt-4"
+                        id="paymentButton"
+                    >
+
+                        Proceed to Payment
+
+                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="mt-auto pt-4 pb-3">
+
+        <div class="container">
+
+            <div class="border-top border-secondary pt-3 text-center small">
+
+                &copy; 2026 STORE, Inc.
+                All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+
+        // ==========================================
+        // GET CHECKOUT DATA
+        // ==========================================
+
+        const checkoutData =
+            document.getElementById("checkoutData");
+
+
+        const productPrice =
+            Number(checkoutData.dataset.productPrice);
+
+
+        const deliveryCharge =
+            Number(checkoutData.dataset.deliveryCharge);
+
+
+        const maxQuantity =
+            Number(checkoutData.dataset.maxQuantity);
+
+
+
+        // ==========================================
+        // GET HTML ELEMENTS
+        // ==========================================
+
+        const quantityInput =
+            document.getElementById("quantity");
+
+
+        const increaseButton =
+            document.getElementById("increaseQuantity");
+
+
+        const decreaseButton =
+            document.getElementById("decreaseQuantity");
+
+
+        const summaryQuantity =
+            document.getElementById("summaryQuantity");
+
+
+        const totalPrice =
+            document.getElementById("totalPrice");
+
+
+
+        // ==========================================
+        // UPDATE ORDER SUMMARY
+        // ==========================================
+
+        function updateSummary() {
+
+
+            let quantity =
+                parseInt(quantityInput.value);
+
+
+            if (
+                isNaN(quantity) ||
+                quantity < 1
+            ) {
+
+                quantity = 1;
+
+            }
+
+
+            // Never allow quantity above stock
+
+            if (quantity > maxQuantity) {
+
+                quantity = maxQuantity;
+
+            }
+
+
+            quantityInput.value =
+                quantity;
+
+
+            const productTotal =
+                productPrice * quantity;
+
+
+            const finalTotal =
+                productTotal + deliveryCharge;
+
+
+            summaryQuantity.textContent =
+                quantity;
+
+
+            totalPrice.textContent =
+                "₹" + finalTotal.toFixed(2);
+
+
+            // Disable decrease at 1
+
+            decreaseButton.disabled =
+                quantity <= 1;
+
+
+            // Disable increase at maximum stock
+
+            increaseButton.disabled =
+                quantity >= maxQuantity;
+
+        }
+
+
+
+        // ==========================================
+        // INCREASE QUANTITY
+        // ==========================================
+
+        increaseButton.addEventListener(
+            "click",
+            function () {
+
+
+                let quantity =
+                    parseInt(quantityInput.value);
+
+
+                if (
+                    quantity < maxQuantity
+                ) {
+
+                    quantity++;
+
+
+                    quantityInput.value =
+                        quantity;
+
+
+                    updateSummary();
+
+                }
+
+            }
+        );
+
+
+
+        // ==========================================
+        // DECREASE QUANTITY
+        // ==========================================
+
+        decreaseButton.addEventListener(
+            "click",
+            function () {
+
+
+                let quantity =
+                    parseInt(quantityInput.value);
+
+
+                if (quantity > 1) {
+
+                    quantity--;
+
+
+                    quantityInput.value =
+                        quantity;
+
+
+                    updateSummary();
+
+                }
+
+            }
+        );
+
+
+
+        // ==========================================
+        // PROCEED TO PAYMENT
+        // ==========================================
+
+        document
+            .getElementById("paymentButton")
+            .addEventListener(
+                "click",
+                function () {
+
+
+                    const form =
+                        document.getElementById("checkoutForm");
+
+
+                    // Check delivery form
+
+                    if (!form.checkValidity()) {
+
+                        form.reportValidity();
+
+                        return;
+
+                    }
+
+
+                    const quantity =
+                        parseInt(quantityInput.value);
+
+
+                    // Final stock check on frontend
+
+                    if (
+                        quantity < 1 ||
+                        quantity > maxQuantity
+                    ) {
+
+                        alert(
+                            "Selected quantity is not available."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                        PAYMENT GATEWAY WILL BE CONNECTED HERE.
+
+                        Later we will send:
+
+                        Product ID
+                        Quantity
+                        Product Price
+                        Delivery Charge
+                        Total Amount
+                        Name
+                        Email
+                        Phone
+                        Address
+                        Pincode
+                        Landmark
+
+                        to the backend/payment gateway.
+                    */
+
+
+                    alert(
+                        "Checkout information is valid!"
+                    );
+
+                }
+            );
+
+
+
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+
+        updateSummary();
+
+    </script>
+
+
+</body>
+
+</html>
