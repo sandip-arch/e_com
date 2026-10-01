@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Payment</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        body {
+            background: #f5f7fa;
+        }
+
+        .payment-container {
+            max-width: 900px;
+            margin: 50px auto;
+        }
+
+        .payment-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .payment-method {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .payment-method:hover {
+            border-color: #0d6efd;
+            background: #f8fbff;
+        }
+
+        .payment-method input {
+            margin-right: 10px;
+        }
+
+        .amount {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .transaction {
+            font-size: 13px;
+            color: #666;
+            word-break: break-all;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container payment-container">
+
+    <div class="row g-4">
+
+        <!-- Payment Details -->
+
+        <div class="col-md-7">
+
+            <div class="card payment-card">
+
+                <div class="card-body p-4">
+
+                    <h3 class="mb-4">
+                        Complete Payment
+                    </h3>
+
+
+                    <!-- Product -->
+
+                    <div class="mb-4">
+
+                        <h5>Order Details</h5>
+
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+                                <%= payment.productId.name %>
+                            </span>
+
+                            <span>
+                                ₹<%= payment.productId.price %>
+                            </span>
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-between text-muted">
+
+                            <span>
+                                Quantity
+                            </span>
+
+                            <span>
+                                <%= payment.quantity %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- Payment Methods -->
+
+                    <h5 class="mb-3">
+                        Select Payment Method
+                    </h5>
+
+
+                    <label class="payment-method d-block">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="UPI"
+                        >
+
+                        <strong>UPI</strong>
+
+                        <div class="text-muted small">
+                            Pay using UPI
+                        </div>
+
+                    </label>
+
+
+                    <label class="payment-method d-block">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="CARD"
+                        >
+
+                        <strong>Credit / Debit Card</strong>
+
+                        <div class="text-muted small">
+                            Visa, Mastercard, RuPay
+                        </div>
+
+                    </label>
+
+
+                    <label class="payment-method d-block">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="NET_BANKING"
+                        >
+
+                        <strong>Net Banking</strong>
+
+                        <div class="text-muted small">
+                            Pay using your bank account
+                        </div>
+
+                    </label>
+
+
+                    <label class="payment-method d-block">
+
+                        <input
+                            type="radio"
+                            name="paymentMethod"
+                            value="WALLET"
+                        >
+
+                        <strong>Wallet</strong>
+
+                        <div class="text-muted small">
+                            Pay using wallet
+                        </div>
+
+                    </label>
+
+
+                    <button
+                        type="button"
+                        id="payButton"
+                        class="btn btn-primary w-100 mt-3"
+                    >
+                        Pay ₹<%= payment.amount.toFixed(2) %>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Summary -->
+
+        <div class="col-md-5">
+
+            <div class="card payment-card">
+
+                <div class="card-body p-4">
+
+                    <h5 class="mb-4">
+                        Payment Summary
+                    </h5>
+
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span>
+                            Product
+                        </span>
+
+                        <span>
+                            ₹<%= (
+                                payment.productId.price *
+                                payment.quantity
+                            ).toFixed(2) %>
+                        </span>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <span>
+                            ₹<%= (
+                                payment.amount -
+                                (
+                                    payment.productId.price *
+                                    payment.quantity
+                                )
+                            ).toFixed(2) %>
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <strong>
+                            Total
+                        </strong>
+
+                        <span class="amount">
+                            ₹<%= payment.amount.toFixed(2) %>
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="mt-3">
+
+                        <div class="transaction">
+                            Transaction ID
+                        </div>
+
+                        <div class="transaction">
+                            <%= payment.transactionId %>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-3">
+
+                        <div class="transaction">
+                            Payment Session
+                        </div>
+
+                        <div class="transaction">
+                            <%= payment.sessionId %>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-3">
+
+                        <span class="badge bg-secondary">
+                            <%= payment.status %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const payButton =
+        document.getElementById('payButton');
+
+
+    payButton.addEventListener('click', async () => {
+
+        const selectedMethod =
+            document.querySelector(
+                'input[name="paymentMethod"]:checked'
+            );
+
+
+        if (!selectedMethod) {
+
+            alert('Please select a payment method.');
+
+            return;
+        }
+
+
+        const paymentMethod =
+            selectedMethod.value;
+
+
+        console.log(
+            'Selected payment method:',
+            paymentMethod
+        );
+
+
+        payButton.disabled = true;
+
+        payButton.innerHTML =
+            'Processing...';
+
+
+        try {
+
+            /*
+             * Phase 2 currently only validates
+             * the selected payment method.
+             *
+             * Actual payment processing API
+             * will be connected in the next step.
+             */
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 1000)
+            );
+
+
+            alert(
+                'Payment method selected: ' +
+                paymentMethod +
+                '\n\nPayment processing API will be connected next.'
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                'Something went wrong.'
+            );
+
+        }
+
+
+        payButton.disabled = false;
+
+        payButton.innerHTML =
+            'Pay ₹<%= payment.amount.toFixed(2) %>';
+
+    });
+
+</script>
+
+</body>
+
+</html>

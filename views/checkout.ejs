@@ -655,22 +655,10 @@ document
             }
 
             // Payment session created successfully
-            console.log(
-                "Transaction ID:",
-                data.payment.transactionId
-            );
+           console.log("Payment session created:", data.payment);
 
-            console.log(
-                "Session ID:",
-                data.payment.sessionId
-            );
-
-            // Temporary confirmation
-            alert(
-                "Payment session created successfully!\n\n" +
-                "Transaction ID: " +
-                data.payment.transactionId
-            );
+window.location.href =
+    "/payment/" + data.payment.sessionId;
 
         } catch (error) {
 
