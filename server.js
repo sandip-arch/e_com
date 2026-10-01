@@ -5,6 +5,7 @@ const cookieParser=require('cookie-parser');
 const connectDB=require('./config/db');
 const authRoutes=require('./routes/authRoutes');
 const productRoutes=require('./routes/productRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const app=express();
 dotenv.config();
 connectDB();
@@ -19,5 +20,6 @@ app.use(cookieParser());
 
 app.use('/',authRoutes);
 app.use('/product',productRoutes);
+app.use('/payment', paymentRoutes);
 
 app.listen(process.env.PORT,()=> console.log(`http://localhost:${process.env.PORT}`));
