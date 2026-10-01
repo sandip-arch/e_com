@@ -191,6 +191,7 @@
 
     <div
       id="checkoutData"
+      data-product-id="<%= product._id %>"
       data-product-price="<%= Number(product.price) %>"
       data-delivery-charge="<%= Number(deliveryCharge) %>"
       data-max-quantity="<%= Number(product.quantity) %>"
@@ -259,27 +260,34 @@
                 </label>
 
                 <div class="input-group" style="max-width: 180px">
-                  <!-- DECREASE -->
 
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="decreaseQuantity"
-                  >
-                    −
-                  </button>
+    <button
+        class="btn btn-outline-secondary"
+        type="button"
+        id="decreaseQuantity"
+    >
+        −
+    </button>
 
-             000000000
-                  <!-- INCREASE -->
+    <input
+        type="number"
+        id="quantity"
+        class="form-control text-center"
+        value="1"
+        min="1"
+        max="<%= product.quantity %>"
+        readonly
+    />
 
-                  <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    id="increaseQuantity"
-                  >
-                    +
-                  </button>
-                </div>
+    <button
+        class="btn btn-outline-secondary"
+        type="button"
+        id="increaseQuantity"
+    >
+        +
+    </button>
+
+</div>
 
                 <small class="text-muted">
                   Maximum: <%= product.quantity %>
@@ -575,56 +583,113 @@
         }
       });
 
-      // ==========================================
-      // PROCEED TO PAYMENT
-      // ==========================================
+     // ==========================================
+// PROCEED TO PAYMENT
+// ==========================================
 
-      document
-        .getElementById("paymentButton")
-        .addEventListener("click", function () {
-          const form = document.getElementById("checkoutForm");
+document
+    .getElementById("paymentButton")
+    .addEventListener("click", async function () {
 
-          // Check delivery form
+        const form = document.getElementById("checkoutForm");
 
-          if (!form.checkValidity()) {
+        // Check delivery form
+        if (!form.checkValidity()) {
             form.reportValidity();
-
             return;
-          }
+        }
 
-          const quantity = parseInt(quantityInput.value);
+        const quantity = parseInt(quantityInput.value);
 
-          // Final stock check on frontend
-
-          if (quantity < 1 || quantity > maxQuantity) {
+        // Final stock check
+        if (
+            isNaN(quantity) ||
+            quantity < 1 ||
+            quantity > maxQuantity
+        ) {
             alert("Selected quantity is not available.");
-
             return;
-          }
+        }
 
-          /*
-                        PAYMENT GATEWAY WILL BE CONNECTED HERE.
+        // Get product ID
+        const productId = checkoutData.dataset.productId;
 
-                        Later we will send:
+        if (!productId) {
+            alert("Product information is missing.");
+            return;
+        }
 
-                        Product ID
-                        Quantity
-                        Product Price
-                        Delivery Charge
-                        Total Amount
-                        Name
-                        Email
-                        Phone
-                        Address
-                        Pincode
-                        Landmark
+        // Disable button to prevent double payment requests
+        const paymentButton = document.getElementById("paymentButton");
 
-                        to the backend/payment gateway.
-                    */
+        paymentButton.disabled = true;
+        paymentButton.innerHTML = `
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Creating Payment...
+        `;
 
-          alert("Checkout information is valid!");
-        });
+        try {
 
+            const response = await fetch("/payment/create", {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    productId: productId,
+                    quantity: quantity
+                })
+            });
+
+            const data = await response.json();
+
+            console.log("Payment API response:", data);
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message || "Unable to create payment session."
+                );
+            }
+
+            // Payment session created successfully
+            console.log(
+                "Transaction ID:",
+                data.payment.transactionId
+            );
+
+            console.log(
+                "Session ID:",
+                data.payment.sessionId
+            );
+
+            // Temporary confirmation
+            alert(
+                "Payment session created successfully!\n\n" +
+                "Transaction ID: " +
+                data.payment.transactionId
+            );
+
+        } catch (error) {
+
+            console.error("Payment creation error:", error);
+
+            alert(
+                error.message ||
+                "Something went wrong while creating payment."
+            );
+
+            // Restore button
+            paymentButton.disabled = false;
+
+            paymentButton.innerHTML = `
+                Proceed to Payment
+                <i class="bi bi-arrow-right ms-2"></i>
+            `;
+        }
+    });
       // ==========================================
       // INITIALIZE
       // ==========================================
