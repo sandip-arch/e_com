@@ -4,7 +4,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const {
     createPayment,
-    renderPaymentPage
+    renderPaymentPage,
+    processPayment
 } = require('../controllers/paymentController');
 
 
@@ -15,6 +16,12 @@ router.post(
     createPayment
 );
 
+// Process payment
+router.post(
+    '/process',
+    authMiddleware,
+    processPayment
+);
 
 // Open payment page
 router.get(
