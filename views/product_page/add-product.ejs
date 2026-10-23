@@ -4,70 +4,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(255, 140, 0, 0.2);
+            border-top: 5px solid #ff8c00;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f57c00;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #ff5722;
+            box-shadow: 0 0 5px rgba(255, 140, 0, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            background: #fff8f0;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ff5722;
+        }
+
+        .required {
+            color: #ff5722;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Add New Product</h1>
+    <div class="container">
 
-    <!-- 
-      enctype="multipart/form-data" is required because your schema contains an 'image' field.
-      Replace '/products' with your actual backend route URL.
-    -->
-    <form action="/product/addProduct" method="POST" enctype="multipart/form-data">
-        
-        <!-- Name Field -->
-        <div>
-            <label for="name">Product Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
+        <h1>Add New Product</h1>
 
-        <!-- Price Field -->
-        <div>
-            <label for="price">Price ($):</label>
-            <input type="number" id="price" name="price" step="0.01" min="0" required>
-        </div>
+        <form action="/product/addProduct" method="POST" enctype="multipart/form-data">
 
-        <!-- Type Field (Matches your schema's enum) -->
-        <div>
-            <label for="type">Category / Type:</label>
-            <select id="type" name="type" required>
-                <option value="" disabled selected>Select a type...</option>
-                <option value="clothes">Clothes</option>
-                <option value="cosmetics">Cosmetics</option>
-                <option value="electronics">Electronics</option>
-                <option value="food">Food</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="name">
+                    Product Name <span class="required">*</span>
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter product name"
+                    required
+                >
+            </div>
 
-        <!-- Quantity Field -->
-        <div>
-            <label for="quantity">Quantity in Stock:</label>
-            <input type="number" id="quantity" name="quantity" min="0" required>
-        </div>
+            <div class="form-group">
+                <label for="price">
+                    Price ($) <span class="required">*</span>
+                </label>
+                <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    placeholder="Enter price"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </div>
 
-        <!-- Image Upload Field -->
-        <div>
-            <label for="image">Product Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
-        </div>
+            <div class="form-group">
+                <label for="type">
+                    Category / Type <span class="required">*</span>
+                </label>
+                <select id="type" name="type" required>
+                    <option value="" disabled selected>
+                        Select a type
+                    </option>
+                    <option value="clothes">Clothes</option>
+                    <option value="cosmetics">Cosmetics</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="food">Food</option>
+                </select>
+            </div>
 
-        <!-- Description Field -->
-        <div>
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" cols="50"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="quantity">
+                    Quantity <span class="required">*</span>
+                </label>
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    placeholder="Enter quantity"
+                    min="0"
+                    required
+                >
+            </div>
 
-        <!-- 
-          DistributerId note: This is typically handled automatically on the backend 
-          using the logged-in session data (e.g., req.user._id), so it is omitted from the visible form.
-        -->
+            <div class="form-group">
+                <label for="image">
+                    Product Image <span class="required">*</span>
+                </label>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept="image/*"
+                    required
+                >
+            </div>
 
-        <!-- Submit Button -->
-        <div>
-            <button type="submit">Add Product</button>
-        </div>
+            <div class="form-group">
+                <label for="description">
+                    Description
+                </label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Enter product description"
+                ></textarea>
+            </div>
 
-    </form>
+            <button type="submit">
+                Add Product
+            </button>
+
+        </form>
+
+    </div>
 
 </body>
 </html>
