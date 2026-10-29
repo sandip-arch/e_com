@@ -127,7 +127,7 @@ const processPayment = async (req, res) => {
             userId: req.user.id
 
         });
-
+        console.log('Payment found:', payment);
 
         if (!payment) {
 
@@ -169,33 +169,18 @@ const processPayment = async (req, res) => {
         payment.status = 'SUCCESS';
 
         await payment.save();
+        console.log('Payment updated:', payment);
 
-
-        return res.status(200).json({
-
-            success: true,
-
-            message: 'Payment processed successfully',
-
-            payment: {
-
-                transactionId:
-                    payment.transactionId,
-
-                sessionId:
-                    payment.sessionId,
-
-                amount:
-                    payment.amount,
-
-                currency:
-                    payment.currency,
-
-                paymentMethod:
-                    payment.paymentMethod,
-
-                status:
-                    payment.status
+       return res.status(200).json({
+    success: true,
+    message: 'Payment processed successfully',
+    payment: {
+        transactionId: payment.transactionId,
+        sessionId: payment.sessionId,
+        amount: payment.amount,
+        currency: payment.currency,
+        paymentMethod: payment.paymentMethod,
+        status: payment.status
 
             }
 
